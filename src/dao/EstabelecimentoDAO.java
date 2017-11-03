@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Estabelecimento;
-import model.Usuario;
-import model.Categoria;
 
 public class EstabelecimentoDAO {
 	public int criar(Estabelecimento estabelecimento) {
@@ -22,7 +20,7 @@ public class EstabelecimentoDAO {
 				PreparedStatement stm = conn.prepareStatement(sqlInsert);) {
 			stm.setString(1, estabelecimento.getNomeFantasia());
 			stm.setString(2, estabelecimento.getEndereco());
-			stm.setInt(3, estabelecimento.categoria.getIdCategoria());
+			stm.setInt(3, estabelecimento.getCategoria());
 			stm.execute();
 			String sqlQuery = "SELECT LAST_INSERT_ID()";
 			try (PreparedStatement stm2 = conn.prepareStatement(sqlQuery);
@@ -33,6 +31,7 @@ public class EstabelecimentoDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -40,13 +39,13 @@ public class EstabelecimentoDAO {
 	}
 
 	public void atualizar(Estabelecimento estabelecimento) {
-		String sqlUpdate = "UPDATE Estabelecimento SET NomeFantasia=?, Endereco=?, idCategoria=? WHERE idEstabelecimento=?";
+		String sqlUpdate = "UPDATE Estabelecimento SET NomeFantasia=?, Endereco=?, idCategoria=? WHERE idEst=?";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obterConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 			stm.setString(1, estabelecimento.getNomeFantasia());
 			stm.setString(2, estabelecimento.getEndereco());
-			stm.setInt(3, estabelecimento.categoria.getIdCategoria());
+			stm.setInt(3, estabelecimento.getCategoria());
 			stm.setInt(4, estabelecimento.getIdEst());
 			stm.execute();
 		} catch (Exception e) {
@@ -55,7 +54,7 @@ public class EstabelecimentoDAO {
 	}
 
 	public void excluir(int IdEst) {
-		String sqlDelete = "DELETE FROM Estabelecimento WHERE idEstabelecimento = ?";
+		String sqlDelete = "DELETE FROM Estabelecimento WHERE idEst = ?";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obterConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlDelete);) {
@@ -68,22 +67,22 @@ public class EstabelecimentoDAO {
 
 	public Estabelecimento carregar(int idEst) {
 		Estabelecimento estabelecimento = new Estabelecimento();
-		String sqlSelect = "SELECT idEstabelecimento, nomeFantasia, endereco, idCategoria FROM estabelecimento WHERE idEstabelecimento = ?";
+		String sqlSelect = "SELECT idEst, nomeFantasia, endereco, idCategoria FROM projetointegrado.estabelecimento WHERE idEst = ?";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obterConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			stm.setInt(1, idEst);
 			try (ResultSet rs = stm.executeQuery();) {
 				if (rs.next()) {
-					estabelecimento.setIdEst(rs.getInt("idEstabelecimento"));
+					estabelecimento.setIdEst(rs.getInt("idEst"));
 					estabelecimento.setNomeFantasia(rs.getString("nomeFantasia"));
 					estabelecimento.setEndereco(rs.getString("endereco"));
-					estabelecimento.categoria.setIdCategoria(rs.getInt("idCategoria"));
+					estabelecimento.setCategoria(rs.getInt("idCategoria"));
 				} else {
 					estabelecimento.setIdEst(-1);
 					estabelecimento.setNomeFantasia(null);
 					estabelecimento.setEndereco(null);
-					estabelecimento.categoria.setIdCategoria(-1);
+					estabelecimento.setCategoria(-1);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -96,9 +95,9 @@ public class EstabelecimentoDAO {
 	public ArrayList<Estabelecimento> listarEstabelecimentos() {
 		Estabelecimento estabelecimento;
 		ArrayList<Estabelecimento> lista = new ArrayList<>();
-		String sqlSelect = "SELECT idEstabelecimento, nomeFantasia, endereco, nome\r\n" + 
-				"FROM estabelecimento \r\n" + 
-				"INNER JOIN categoria ON estabelecimento.idCategoria = categoria.idCategoria";
+		String sqlSelect = "SELECT idEst, nomeFantasia, endereco, categoria.nome \r\n" + 
+				"				FROM estabelecimento \r\n" + 
+				"				left JOIN categoria ON estabelecimento.idCategoria = categoria.idCategoria";
 			
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obterConexao();
@@ -106,10 +105,10 @@ public class EstabelecimentoDAO {
 			try (ResultSet rs = stm.executeQuery();) {
 				while (rs.next()) {
 					estabelecimento = new Estabelecimento();
-					estabelecimento.setIdEst(rs.getInt("idEstabelecimento"));
+					estabelecimento.setIdEst(rs.getInt("idEst"));
 					estabelecimento.setNomeFantasia(rs.getString("nomeFantasia"));
 					estabelecimento.setEndereco(rs.getString("endereco"));
-					estabelecimento.categoria.setNome(rs.getString("nome"));
+					//estabelecimento.setCategoria(rs.getInt("idCategoria"));
 					lista.add(estabelecimento);
 				}
 			} catch (SQLException e) {
@@ -124,9 +123,9 @@ public class EstabelecimentoDAO {
 	public ArrayList<Estabelecimento> listarEstabelecimentos(String chave) {
 		Estabelecimento estabelecimento;
 		ArrayList<Estabelecimento> lista = new ArrayList<>();
-		String sqlSelect = "SELECT idEstabelecimento, nomeFantasia, endereco, nome\r\n" + 
+		String sqlSelect = "SELECT idEst, nomeFantasia, endereco, categoria.nome\r\n" + 
 				"FROM estabelecimento \r\n" + 
-				"INNER JOIN categoria ON estabelecimento.idCategoria = categoria.idCategoria where nome like ?";
+				"inner JOIN categoria ON estabelecimento.idCategoria = categoria.idCategoria where nome like ?";
 			
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obterConexao();
@@ -135,10 +134,10 @@ public class EstabelecimentoDAO {
 			try (ResultSet rs = stm.executeQuery();) {
 				while (rs.next()) {
 					estabelecimento = new Estabelecimento();
-					estabelecimento.setIdEst(rs.getInt("idEstabelecimento"));
+					estabelecimento.setIdEst(rs.getInt("idEst"));
 					estabelecimento.setNomeFantasia(rs.getString("nomeFantasia"));
 					estabelecimento.setEndereco(rs.getString("endereco"));
-					estabelecimento.categoria.setNome(rs.getString("nome"));
+					//estabelecimento.setCategoria(rs.getInt("categoria.nome"));
 					lista.add(estabelecimento);
 				}
 			} catch (SQLException e) {

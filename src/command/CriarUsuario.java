@@ -22,6 +22,13 @@ public class CriarUsuario implements Command {
 		String pCelular = request.getParameter("celular");
 		String pLogin = request.getParameter("login");
 		String pSenha = request.getParameter("senha");
+		
+		System.out.println(pIdUsuario);
+		System.out.println(pNome);
+		System.out.println(pEmail);
+		System.out.println(pCelular);
+		System.out.println(pLogin);
+		System.out.println(pSenha);
 
 		int idUsuario = -1;
 		try {

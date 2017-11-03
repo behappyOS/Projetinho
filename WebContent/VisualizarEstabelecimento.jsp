@@ -60,6 +60,16 @@
                             </p>
                         </div>
                     </div>
+                    
+                                        <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Categoria</strong>
+                            </p>
+                            <p>
+                                ${estabelecimento.idCategoria }
+                            </p>
+                        </div>
+                    </div>
                     <hr />
                     <div id="actions" class="row">
                         <div class="col-md-12">

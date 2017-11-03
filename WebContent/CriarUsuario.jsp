@@ -15,7 +15,7 @@
 
 <body>
     <!-- Barra superior com os menus de navegação -->
-	<c:import url="Menu.jsp"/>
+	<!--<c:import url="Menu.jsp"/>
     <!-- Container Principal -->
     <div id="main" class="container">
         <h3 class="page-header">Incluir Usuario</h3>
@@ -58,8 +58,8 @@
             <hr />
             <div id="actions" class="row">
                 <div class="col-md-12">
-                    <a href="controller.do?command=FazerLogin"><button type="submit" class="btn btn-primary" name="command" value="CriarUsuario">Salvar</button></a>
-                    <a href="index.jsp" class="btn btn-default">Voltar</a>
+                    <a href="controller.do?command=Login"><button type="submit" class="btn btn-primary" name="command" value="CriarUsuario">Salvar</button></a>
+                    <a href="Login.jsp" class="btn btn-default">Voltar</a>
                 </div>
             </div>
         </form>

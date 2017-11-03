@@ -24,8 +24,8 @@
             <!-- area de campos do form -->
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="nome">Estabelecimento</label>
-                    <input type="text" class="form-control" name="nome" id="nome" required maxlength="100" placeholder="Novo Estabelecimento">
+                    <label for="nomeFantasia">Estabelecimento</label>
+                    <input type="text" class="form-control" name="nomeFantasia" id="nomeFantasia" required maxlength="100" placeholder="Novo Estabelecimento">
                 </div>
             </div>
             <div class="row">
@@ -37,12 +37,12 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="endereco">Categoria</label>
+                    <label for="categorias">Categoria</label>
                     <p>
                 	<select name="categoria">
-					<option value="bar">Bar/Restaurantes</option>
-					<option value="cine">Cinema</option>
-					<option value="parque">Parque</option>
+					<option value="1">Bar/Restaurantes</option>
+					<option value="2">Cinema</option>
+					<option value="3">Parque</option>
 					</select>
 					<p/>
                 </div>
@@ -52,7 +52,7 @@
             <div id="actions" class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary" name="command" value="CriarEstabelecimento">Salvar</button>
-                    <a href="controller.do?command=ListarEstabelecimentosReiniciar" class="btn btn-default">Cancelar</a>
+                    <a href="controller.do?command=ListarEstabelecimentosBuscar" class="btn btn-default">Cancelar</a>
                 </div>
             </div>
         </form>

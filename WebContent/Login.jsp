@@ -38,7 +38,7 @@
 				</div>
 				<div class="row col-md-12">
 					 <button type="submit" class="btn btn-primary" name="command" value="FazerLogin"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Ok</button>
-					 <a href="controller.do?command=CriarUsuario" class="btn btn-default">Cadastre-se</a>
+					 <a href="CriarUsuario.jsp" class="btn btn-default">Cadastre-se</a>
 				</div>
 			</form>    
 			</div>

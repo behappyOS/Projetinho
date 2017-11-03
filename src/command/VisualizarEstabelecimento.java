@@ -18,9 +18,16 @@ public class VisualizarEstabelecimento implements Command {
 		String pIdEst = request.getParameter("idEst");
 		String pNomeFantasia = request.getParameter("nomeFantasia");
 		String pEndereco = request.getParameter("endereco");
+		String pCategoria = request.getParameter("categoria");
 		int idEst = -1;
 		try {
 			idEst = Integer.parseInt(pIdEst);
+		} catch (NumberFormatException e) {
+
+		}
+		int categoria = -1;
+		try {
+			categoria = Integer.parseInt(pCategoria);
 		} catch (NumberFormatException e) {
 
 		}
@@ -29,10 +36,12 @@ public class VisualizarEstabelecimento implements Command {
 		estabelecimento.setIdEst(idEst);
 		estabelecimento.setNomeFantasia(pNomeFantasia);
 		estabelecimento.setEndereco(pEndereco);
+		estabelecimento.setCategoria(categoria);
 		EstabelecimentoService es = new EstabelecimentoService();
 		
 		RequestDispatcher view = null;
-
+		
+		System.out.println(estabelecimento);
 		estabelecimento = es.carregar(estabelecimento.getIdEst());
 		request.setAttribute("Estabelecimento", estabelecimento);
 		view = request.getRequestDispatcher("VisualizarEstabelecimento.jsp");

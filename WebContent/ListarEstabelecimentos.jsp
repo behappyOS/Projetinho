@@ -76,7 +76,7 @@
                                     <th>ID</th>
                                     <th>Estabelecimento</th>
                                     <th>Endereço</th>
-                                    <th>Categoria</th>
+                                    
                                     <th class="actions">Ações</th>
                                 </tr>
                             </thead>
@@ -92,9 +92,9 @@
                                             <td>
                                                 ${estabelecimento.endereco }
                                             </td>
-                                            <td>
-                                                ${categoria.nome }
-                                            </td>
+
+
+
                                             <td class="actions">
                                                 <a class="btn btn-success btn-xs" href="controller.do?command=VisualizarEstabelecimento&id=${estabelecimento.idEst }">Visualizar</a>
                                                 <a class="btn btn-warning btn-xs" href="controller.do?command=EditarEstabelecimento&id=${estabelecimento.idEst }">Editar</a>

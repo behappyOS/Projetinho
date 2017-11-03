@@ -17,7 +17,7 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="controller.do?command=ListarEstabelecimentosReiniciar">Estabelecimentos</a>
+                    <li><a href="controller.do?command=ListarEstabelecimentosBuscar">Estabelecimentos</a>
                     </li>
                 </ul>
                 
